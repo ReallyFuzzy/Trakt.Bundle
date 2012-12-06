@@ -98,6 +98,15 @@ def VideoMainMenu():
 	)
 
 	oc.add(
+		InputDirectoryObject(
+			key=Callback(SearchMenu),
+			title="Search",
+			prompt="Please enter a search term",
+			art = R(ART)	
+		)
+	)
+
+	oc.add(
 		PrefsObject(
 			title=L("PrefsTitle"),
 			tagline=L("PrefsSubtitle"),
@@ -144,6 +153,41 @@ def WatchlistMenu(type=None, genre=None, path=[], parent_name=None):
 		
 	return oc
 
+####################################################################################################
+
+def SearchMenu(query):
+
+	oc = ObjectContainer(no_cache=True, title1="", title2="Search Results", view_group="InfoList")
+
+	watchlist = callTrakt(
+		"search/shows.json",
+		[query],
+		None
+	)
+	
+	Log(watchlist)
+	
+	for item in watchlist:
+	
+		oc.add(
+			DirectoryObject(
+				key=Callback(
+					SeasonsMenu,
+					imdb_id=item['imdb_id'],
+					show_name=item['title'],
+					tvdb_id=item['tvdb_id'],
+					art=item['images']['fanart'],
+					name=item['title'],
+					parent_name=oc.title2,
+				),
+				title=item['title'],
+				summary=item['overview'],
+				thumb=item['images']['poster'],
+				art=item['images']['fanart'],
+			)
+		)
+		
+	return oc
 
 ####################################################################################################
 
