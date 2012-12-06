@@ -1,0 +1,17 @@
+[
+    {
+        "id": "username",
+        "type": "text",
+        "label": "Your tract.tv user name:",
+        "default": "",
+    },
+    {
+        "id": "password",
+        "type": "text",
+        "option": "hidden",
+        "label": "Your trakt.tv Password:",
+        "default": "",
+        "secure": "true",
+    },
+
+]
